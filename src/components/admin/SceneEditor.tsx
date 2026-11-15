@@ -560,56 +560,6 @@ export default function SceneEditor({
         </Panel>
       </div>
       <Panel
-        title="Door speech bubble"
-        description="The little bubble on the front door that invites people in (phones). Type anything short, like Come in or We're open."
-      >
-        <Field
-          label="Bubble text"
-          value={content.scenes.doorBubble?.text ?? "Come in"}
-          placeholder="Come in"
-          maxLength={40}
-          onChange={(v) =>
-            update((d) => {
-              d.scenes.doorBubble = {
-                text: v,
-                size: d.scenes.doorBubble?.size || "small",
-              };
-            })
-          }
-        />
-        <div className="ad-choice-row" role="radiogroup" aria-label="Bubble size">
-          {(
-            [
-              ["small", "Small", "Tucked onto the door"],
-              ["medium", "Medium", "A little easier to spot"],
-              ["large", "Large", "Big and bold"],
-            ] as const
-          ).map(([value, label, help]) => {
-            const active = (content.scenes.doorBubble?.size || "small") === value;
-            return (
-              <button
-                key={value}
-                type="button"
-                role="radio"
-                aria-checked={active}
-                className={`ad-choice${active ? " is-active" : ""}`}
-                onClick={() =>
-                  update((d) => {
-                    d.scenes.doorBubble = {
-                      text: d.scenes.doorBubble?.text ?? "Come in",
-                      size: value,
-                    };
-                  })
-                }
-              >
-                <strong>{label}</strong>
-                <span>{help}</span>
-              </button>
-            );
-          })}
-        </div>
-      </Panel>
-      <Panel
         title="Storefront window fun"
         description="Pick a playful touch that floats out of the front windows on the home page. Choose Nothing to keep the storefront as it is."
       >

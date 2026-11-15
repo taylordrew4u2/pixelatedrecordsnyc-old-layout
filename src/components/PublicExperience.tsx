@@ -225,23 +225,23 @@ function SiteHeader({ content, now }: { content: SiteContent; now: Date }) {
           className={`header-now${tonight?.live ? " is-live" : ""}`}
           ariaLabel={
             headerEvent
-              ? `${tonight?.live ? "Live now" : "Tonight"}: ${headerEvent.title}, ${eventStart}. View event flyer.`
-              : "Good vibes happening now at Pixelated Records. See upcoming events."
+              ? `${tonight?.live ? "Happening live now" : "Tonight"}: ${headerEvent.title}, ${eventStart}. View event flyer.`
+              : "Upcoming events at Pixelated Records. Explore the calendar."
           }
         >
-          <span className="live-dot" aria-hidden="true" />
-          {headerEvent ? (
-            <>
-              <span className="header-now-label">
-                {tonight?.live ? "Live now" : "Tonight"}
-              </span>
-              <span className="header-now-title">{headerEvent.title}</span>
-            </>
-          ) : (
-            <span className="header-now-title header-now-vibes">
-              Good vibes happening now
+          <span className="header-now-status">
+            {tonight?.live && <span className="live-dot" aria-hidden="true" />}
+            <span className="header-now-label">
+              {tonight?.live
+                ? "Happening live now"
+                : headerEvent
+                  ? "Tonight"
+                  : "Upcoming events"}
             </span>
-          )}
+          </span>
+          <span className="header-now-title">
+            {headerEvent?.title || "Explore the calendar"}
+          </span>
           {headerEvent && (
             <span className="header-now-start">
               {headerEvent.status === "sold-out" ? "Sold out · " : ""}
@@ -447,16 +447,7 @@ function Scene({
   const hotspots = scene.hotspots.filter((hotspot) =>
     destinationVisible(hotspot.href, content),
   );
-  const door = scene.hotspots.find(
-    (hotspot) => hotspot.href.split(/[?#]/)[0] === "/inside",
-  );
   const effect = content.scenes.windowEffect || "none";
-  const doorHref = door?.href || "/inside";
-  const doorLabel =
-    content.scenes.doorBubble?.text.trim() ||
-    door?.label ||
-    content.labels.enter;
-  const doorSize = content.scenes.doorBubble?.size || "small";
   const enhanced = enhancedPhoto(scene.image);
   const photo = safeHref(enhanced?.src || scene.image, "");
   // The photo fills the available canvas. The interior stays full resolution
@@ -673,9 +664,6 @@ function Scene({
                   ))}
                 </span>
               )}
-              <A href={doorHref} className={`door-bubble is-${doorSize}`}>
-                {doorLabel}
-              </A>
             </div>
           )}
           {!exterior &&
@@ -752,6 +740,10 @@ function Home({
   const entrance = content.scenes.exterior.hotspots.find(
     (hotspot) => hotspot.href.split(/[?#]/)[0] === "/inside",
   );
+  const navigation = content.navigation.filter(
+    (link) => link.visible && destinationVisible(link.href, content),
+  );
+  const entranceLabel = entrance?.label.trim();
   return (
     <>
       <section className="home-hero" aria-labelledby="home-title">
@@ -769,19 +761,21 @@ function Home({
         </div>
         <p>{page.description}</p>
       </section>
-      <nav className="home-entry" aria-label="Enter the store">
-        <A href={entrance?.href || "/inside"} className="home-entry-link">
-          {entrance?.label || content.labels.enter}
-        </A>
-      </nav>
       <nav className="sky-nav" aria-label="Main">
-        {content.navigation
-          .filter((link) => link.visible && destinationVisible(link.href, content))
-          .map((link) => (
-            <A key={link.id} href={link.href} className="sky-nav-link">
-              {link.label}
-            </A>
-          ))}
+        {!navigation.some(
+          (link) => link.href.split(/[?#]/)[0] === "/inside",
+        ) && (
+          <A href={entrance?.href || "/inside"} className="sky-nav-link">
+            {entranceLabel && !/^come in$/i.test(entranceLabel)
+              ? entranceLabel
+              : "Inside"}
+          </A>
+        )}
+        {navigation.map((link) => (
+          <A key={link.id} href={link.href} className="sky-nav-link">
+            {link.label}
+          </A>
+        ))}
       </nav>
       <Sections sections={page.sections} content={content} />
     </>
@@ -1863,6 +1857,9 @@ function Footer({
           ))}
         </div>
       </div>
+      <p className="venue-footer-credit">
+        Created by <span>4U Digital</span>
+      </p>
     </footer>
   );
 }

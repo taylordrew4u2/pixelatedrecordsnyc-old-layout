@@ -47,7 +47,7 @@ test("homepage renders the time-driven sky and matching mobile photo in every ph
     );
     assert.match(html, /storefront-street-mobile-cut\.webp 1024w/);
     assert.match(html, /storefront-street-mobile-night\.webp 1024w/);
-    assert.match(html, /class="door-bubble is-small"[^>]*>Come in</);
+    assert.doesNotMatch(html, /door-bubble/);
     if (phase === "night")
       assert.match(
         html,
@@ -195,7 +195,7 @@ test("draft-preview links preserve existing queries and put preview before the f
   assert.ok(!links.some((href) => href.includes("#drinks?preview")));
 });
 
-test("the editable entrance sits outside the photo with no window or door buttons", () => {
+test("the entrance is a plain sky navigation link with no sign over the photo", () => {
   const content = fixture();
   content.scenes.exterior.hotspots = [
     {
@@ -218,16 +218,42 @@ test("the editable entrance sits outside the photo with no window or door button
       height: 10,
     },
   ];
+  content.scenes.doorBubble = { text: "Unwanted neon sign", size: "large" };
   const html = render(content);
-  const entrances = anchors(html).filter((anchor) =>
-    /class="home-entry-link/.test(anchor.attributes),
+  const entrances = anchors(html).filter(
+    (anchor) =>
+      /class="sky-nav-link/.test(anchor.attributes) &&
+      anchor.href === "/inside",
   );
   assert.equal(entrances.length, 1);
   assert.equal(entrances[0].href, "/inside");
   assert.match(entrances[0].inner, /Step into the listening room/);
   assert.doesNotMatch(entrances[0].inner, /<svg\b|Click here to/);
-  assert.doesNotMatch(html, /door-hotspot|Browse the shelves/);
-  assert.match(html, /<\/section><nav class="home-entry"/);
+  assert.doesNotMatch(
+    html,
+    /door-bubble|home-entry|door-hotspot|Browse the shelves|Unwanted neon sign/,
+  );
+  assert.match(html, /<\/section><nav class="sky-nav"/);
+});
+
+test("the default Inside link stays reachable without duplicating an owner-added navigation item", () => {
+  const content = fixture();
+  const insideLinks = () =>
+    anchors(render(content)).filter(
+      (anchor) =>
+        /class="sky-nav-link/.test(anchor.attributes) &&
+        anchor.href === "/inside",
+    );
+  assert.equal(insideLinks().length, 1);
+  assert.equal(insideLinks()[0].inner, "Inside");
+  content.navigation.push({
+    id: "nav-inside",
+    label: "Explore inside",
+    href: "/inside",
+    visible: true,
+  });
+  assert.equal(insideLinks().length, 1);
+  assert.equal(insideLinks()[0].inner, "Explore inside");
 });
 
 test("inside has an explicit leave link to home, including draft preview", () => {
@@ -399,13 +425,17 @@ test("header links tonight's event flyer with local start time and an accurate l
   assert.equal(header?.href, "/events/tonight-flyer");
   assert.match(header?.inner || "", /tonight-flyer/);
   assert.match(header?.inner || "", /9 PM/);
-  assert.doesNotMatch(header?.inner || "", /Live now/);
+  assert.match(header?.inner || "", /Tonight/);
+  assert.doesNotMatch(header?.inner || "", /Happening live now|live-dot/);
   content.events[0] = event("live-flyer", "2026-01-14T18:00:00-05:00");
   header = anchors(render(content, "home", true)).find((anchor) =>
     anchor.attributes.includes("header-now"),
   );
   assert.equal(header?.href, "/events/live-flyer?preview=1");
-  assert.match(header?.inner || "", /Live now/);
+  assert.match(header?.inner || "", /Happening live now/);
+  assert.match(header?.inner || "", /live-dot/);
+  assert.match(header?.attributes || "", /is-live/);
+  assert.match(header?.attributes || "", /aria-label="Happening live now:/);
   assert.match(header?.inner || "", /6 PM/);
 });
 
@@ -416,7 +446,26 @@ test("header falls back to the events page without inventing a live show", () =>
     anchor.attributes.includes("header-now"),
   );
   assert.equal(header?.href, "/events");
-  assert.match(header?.inner || "", /Good vibes happening now/i);
+  assert.match(header?.inner || "", /Upcoming events/);
   assert.match(header?.inner || "", /7:00 PM/);
-  assert.doesNotMatch(header?.inner || "", /Live now/);
+  assert.doesNotMatch(header?.inner || "", /Happening live now|live-dot/);
+  assert.doesNotMatch(header?.attributes || "", /is-live/);
+});
+
+test("ended, cancelled, and unpublished shows never light up the live sign", () => {
+  for (const show of [
+    event("ended", "2026-01-14T15:00:00-05:00"),
+    event("cancelled", "2026-01-14T18:00:00-05:00", { status: "cancelled" }),
+    event("private", "2026-01-14T18:00:00-05:00", { published: false }),
+  ]) {
+    const content = fixture();
+    content.events = [show];
+    const header = anchors(render(content)).find((anchor) =>
+      anchor.attributes.includes("header-now"),
+    );
+    assert.equal(header?.href, "/events");
+    assert.match(header?.inner || "", /Upcoming events/);
+    assert.doesNotMatch(header?.inner || "", /Happening live now|live-dot/);
+    assert.doesNotMatch(header?.attributes || "", /is-live/);
+  }
 });

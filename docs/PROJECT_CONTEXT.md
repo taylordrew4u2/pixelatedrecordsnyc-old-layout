@@ -1,5 +1,15 @@
 # Pixelated Records: current project brief
 
+## Restored-layout site — November 15, 2026
+
+This repository is now `taylordrew4u2/pixelatedrecordsnyc-old-layout`, deployed separately at https://pixeated.netlify.app/. The original anchored website remains at https://pixelatedrecordsnyc.netlify.app/; do not deploy this layout over it.
+
+Latest owner corrections supersede older entrance and header instructions below:
+
+- Remove the neon "Come in" sign entirely. A plain **Inside** link in the sky navigation keeps the room reachable; custom entrance labels and owner-added Inside navigation remain supported.
+- A prominent **Happening live now** badge appears only while a published event is actually running. Future shows say **Tonight**; an empty schedule links to **Upcoming events**, with no live dot or claim.
+- Show **Created by 4U Digital** at the bottom on desktop and phones.
+
 Reconciled November 12, 2026 from the owner's shared **Branch · Write Website Prompt** conversation, from the initial brief through the latest three supplied room photos. Later corrections take precedence over earlier concepts. This document records requirements and evidence, not a claim that every feature is currently deployed.
 
 ## Project and priorities
