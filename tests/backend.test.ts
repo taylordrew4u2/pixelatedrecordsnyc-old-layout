@@ -453,6 +453,26 @@ test("images remain private until actually referenced by live content; unsafe up
     assert.equal(uploaded.status, 201);
     const { asset } = await uploaded.json();
     assert.equal(asset.mime, "image/webp");
+    for (const format of ["jpeg", "webp"] as const) {
+      const source = await sharp(pixels).toFormat(format).toBuffer();
+      const response = await upload(
+        uploadRequest(source, `photo.${format}`, `image/${format}`, cookie),
+      );
+      assert.equal(response.status, 201, `${format} uploads remain supported`);
+      const result = await response.json();
+      assert.equal(result.asset.mime, "image/webp");
+      const encoded = await media(
+        request(result.asset.src, "GET", undefined, cookie),
+        { params: Promise.resolve({ id: result.asset.id }) },
+      );
+      assert.equal(encoded.status, 200);
+      const metadata = await sharp(
+        Buffer.from(await encoded.arrayBuffer()),
+      ).metadata();
+      assert.equal(metadata.format, "webp");
+      assert.equal(metadata.width, 20);
+      assert.equal(metadata.height, 20);
+    }
     assert.equal(
       (
         await media(request(asset.src), {

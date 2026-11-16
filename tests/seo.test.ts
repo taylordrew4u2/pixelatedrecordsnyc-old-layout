@@ -1,5 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { mkdtemp, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
+import nextConfig from "../next.config";
+import robots from "../src/app/robots";
+import { generateMetadata } from "../src/app/[[...slug]]/page";
+import { metadata as adminMetadata } from "../src/app/admin/page";
 import { legacySeedContent, seedContent } from "../src/lib/seed";
 import {
   applyEditorialDefaults,
@@ -9,6 +16,66 @@ import {
   defaultPageSeo,
   serializeStructuredData,
 } from "../src/lib/site-seo";
+
+test("portfolio pages and all responses remain excluded from search without blocking public crawling", async () => {
+  const directory = await mkdtemp(
+    path.join(tmpdir(), "pixelated-portfolio-seo-"),
+  );
+  const names = [
+    "CONTENT_STORAGE",
+    "PIXELATED_DATA_DIR",
+    "SUPABASE_URL",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "VERCEL",
+    "NETLIFY",
+    "SITE_ID",
+  ];
+  const previous = Object.fromEntries(
+    names.map((name) => [name, process.env[name]]),
+  );
+  for (const name of names) delete process.env[name];
+  process.env.CONTENT_STORAGE = "local";
+  process.env.PIXELATED_DATA_DIR = directory;
+  try {
+    for (const page of seedContent.pages) {
+      const metadata = await generateMetadata({
+        params: Promise.resolve({
+          slug: page.id === "home" ? undefined : [page.id],
+        }),
+        searchParams: Promise.resolve({}),
+      });
+      assert.deepEqual(
+        metadata.robots,
+        { index: false, follow: true },
+        page.id,
+      );
+      assert.ok(metadata.title, `${page.id} keeps its sharing title`);
+    }
+    const headers = await nextConfig.headers!();
+    const publicRule = headers.find((rule) => rule.source === "/:path*");
+    assert.ok(
+      publicRule?.headers.some(
+        (header) =>
+          header.key.toLowerCase() === "x-robots-tag" &&
+          header.value === "noindex",
+      ),
+    );
+    const crawlerRules = robots().rules;
+    assert.ok(crawlerRules && !Array.isArray(crawlerRules));
+    assert.equal(crawlerRules.allow, "/");
+    assert.ok(
+      Array.isArray(crawlerRules.disallow) &&
+        !crawlerRules.disallow.includes("/"),
+    );
+    assert.deepEqual(adminMetadata.robots, { index: false, follow: false });
+  } finally {
+    for (const [name, value] of Object.entries(previous)) {
+      if (value === undefined) delete process.env[name];
+      else process.env[name] = value;
+    }
+    await rm(directory, { recursive: true, force: true });
+  }
+});
 
 test("legacy published defaults gain local SEO without changing custom editor copy or uploads", () => {
   const content = structuredClone(legacySeedContent);

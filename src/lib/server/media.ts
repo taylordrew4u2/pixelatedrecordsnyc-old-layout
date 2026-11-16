@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { mkdir, open, readFile } from "node:fs/promises";
 import path from "node:path";
-import sharp from "sharp";
+import sharp, { type OutputInfo } from "sharp";
 import type { Asset } from "@/lib/types";
 import { isAuthenticated } from "./auth";
 import { getDataDirectory, getStorageMode, getSupabaseConfig } from "./config";
@@ -56,7 +56,7 @@ export async function uploadMedia(request: Request): Promise<Asset> {
       "UNSUPPORTED_IMAGE",
     );
   const original = Buffer.from(await file.arrayBuffer());
-  let encoded: { data: Buffer; info: sharp.OutputInfo };
+  let encoded: { data: Buffer; info: OutputInfo };
   try {
     const pipeline = sharp(original, {
       limitInputPixels: 40_000_000,

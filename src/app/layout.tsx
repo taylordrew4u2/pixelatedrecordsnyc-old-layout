@@ -14,6 +14,7 @@ import "./photo-layout.css";
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.SITE_URL || "http://localhost:3000"),
+  robots: { index: false, follow: true },
   title: "Pixelated Records | Vinyl, Bar & Events in Ridgewood",
   description:
     "A record shop, bar, and event space at 792 Onderdonk Avenue in Ridgewood, Queens.",

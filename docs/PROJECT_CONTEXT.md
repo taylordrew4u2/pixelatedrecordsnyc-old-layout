@@ -4,6 +4,10 @@
 
 This repository is now `taylordrew4u2/pixelatedrecordsnyc-old-layout`, deployed separately at https://pixeated.netlify.app/. The original anchored website remains at https://pixelatedrecordsnyc.netlify.app/; do not deploy this layout over it.
 
+The owner confirmed this copy is a **portfolio demo**. Keep it public to visitors but out of search results with page-level `noindex` metadata and the `X-Robots-Tag: noindex` response header. Public routes stay crawlable so search engines can read that directive; admin and private previews retain `nofollow`. An empty event store is acceptable for this demo, and additional venue SEO work is unnecessary. These settings apply only to the separate portfolio site.
+
+The footer identifies it as a portfolio demo. Preserve the time-driven storefront effect while loading its daytime sky and nighttime photo layers only when their opacity contributes to the current scene; hidden layers should not consume the initial image payload.
+
 Latest owner corrections supersede older entrance and header instructions below:
 
 - Remove the neon "Come in" sign entirely. A plain **Inside** link in the sky navigation keeps the room reachable; custom entrance labels and owner-added Inside navigation remain supported.

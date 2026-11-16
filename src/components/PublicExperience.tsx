@@ -584,16 +584,18 @@ function Scene({
                 } as CSSProperties
               }
             >
-              <picture>
-                {skySource}
-                <img
-                  className="sky-day"
-                  src={photo}
-                  srcSet={sourceSet}
-                  sizes="100vw"
-                  alt=""
-                />
-              </picture>
+              {sky.daylight > 0 && (
+                <picture>
+                  {skySource}
+                  <img
+                    className="sky-day"
+                    src={photo}
+                    srcSet={sourceSet}
+                    sizes="100vw"
+                    alt=""
+                  />
+                </picture>
+              )}
               <div className="sky-stars" />
             </div>
           )}
@@ -626,21 +628,23 @@ function Scene({
           </picture>
           {portrait && (
             <div className="street-extras">
-              <picture>
-                <source
-                  media={PHONE}
-                  srcSet="/assets/storefront-street-mobile-night-small.webp 640w, /assets/storefront-street-mobile-night.webp 1024w"
-                  sizes="100vw"
-                />
-                <img
-                  className="street-night"
-                  src="/assets/storefront-wide-night.webp"
-                  srcSet="/assets/storefront-wide-night-small.webp 960w, /assets/storefront-wide-night.webp 2672w"
-                  sizes="100vw"
-                  alt=""
-                  aria-hidden="true"
-                />
-              </picture>
+              {sky && sky.daylight < 1 && (
+                <picture>
+                  <source
+                    media={PHONE}
+                    srcSet="/assets/storefront-street-mobile-night-small.webp 640w, /assets/storefront-street-mobile-night.webp 1024w"
+                    sizes="100vw"
+                  />
+                  <img
+                    className="street-night"
+                    src="/assets/storefront-wide-night.webp"
+                    srcSet="/assets/storefront-wide-night-small.webp 960w, /assets/storefront-wide-night.webp 2672w"
+                    sizes="100vw"
+                    alt=""
+                    aria-hidden="true"
+                  />
+                </picture>
+              )}
               <span className="street-window-glow is-left" aria-hidden="true" />
               <span className="street-window-glow is-right" aria-hidden="true" />
               {effect !== "none" && (
@@ -1858,7 +1862,7 @@ function Footer({
         </div>
       </div>
       <p className="venue-footer-credit">
-        Created by <span>4U Digital</span>
+        Portfolio demo · Created by <span>4U Digital</span>
       </p>
     </footer>
   );

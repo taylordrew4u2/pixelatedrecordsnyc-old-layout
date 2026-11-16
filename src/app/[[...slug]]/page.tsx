@@ -57,7 +57,7 @@ export async function generateMetadata({
     description,
     alternates: { canonical },
     icons: { icon: content.brand.favicon },
-    robots: preview ? { index: false, follow: false } : undefined,
+    robots: { index: false, follow: !preview },
     openGraph: {
       type: "website",
       siteName: content.brand.name,
