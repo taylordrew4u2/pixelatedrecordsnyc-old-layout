@@ -116,6 +116,20 @@ export function applyEditorialDefaults(
       "The drinks menu isn’t online yet. Ask at the bar for the current selection and prices.";
   if (next.booking.description === legacy.booking.description)
     next.booking.description = `Planning an event in ${content.location.neighborhood}? Contact ${content.brand.name} about booking the venue.`;
+  // Earlier defaults set the Inside room labels at uneven heights and put
+  // About Us under the drag hint; untouched positions move to one aligned row
+  // with About Us on the back-wall door. Owner-moved hotspots are kept.
+  const roomSpots: Record<string, [number, number, number, number]> = {
+    about: [56, 72, 50, 40],
+    bar: [78, 65, 78, 64],
+  };
+  for (const spot of next.scenes.interior.hotspots) {
+    const move = roomSpots[spot.id];
+    if (move && spot.x === move[0] && spot.y === move[1]) {
+      spot.x = move[2];
+      spot.y = move[3];
+    }
+  }
   return next;
 }
 
