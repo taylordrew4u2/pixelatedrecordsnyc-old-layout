@@ -1438,3 +1438,51 @@
     transition: none;
   }
 }
+
+/* Phone polish (Nov 20 live check). */
+@media (max-width: 760px), (hover: none) and (pointer: coarse) {
+  /* Empty-tonight note at reading size instead of a four-line headline. */
+  .public-site.photo-layout .tonight-empty-copy h2 {
+    font-size: 20px;
+    line-height: 1.35;
+  }
+  /* Card pages: the Swipe hint sits bottom-centre, off the card's title row. */
+  .public-site.photo-layout:is(
+      .page-events,
+      .page-location,
+      .page-about,
+      .page-calendar,
+      .page-records
+    )
+    .pan-hint {
+    top: auto;
+    right: auto;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  /* Footer reads the same on every page: Visit left, socials right. */
+  .public-site.photo-layout .venue-footer-main {
+    order: 1;
+  }
+  .public-site.photo-layout .venue-footer-meta {
+    order: 2;
+    margin-left: auto;
+  }
+  .public-site.photo-layout .venue-footer-credit {
+    order: 3;
+  }
+}
+@media (max-width: 600px) {
+  /* Home has no Menu button, so give the logo row its own height and a gap
+     before the events line. */
+  .public-site.photo-layout.page-home .site-header {
+    row-gap: 6px;
+    padding-top: 10px;
+  }
+  .public-site.photo-layout.page-home .site-header .brand-link {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
