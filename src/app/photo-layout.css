@@ -1348,3 +1348,93 @@
     height: calc(100% - 40px);
   }
 }
+
+/* Home: the main links sit together on one slim solid bar in the sky instead
+   of floating over bricks and the awning edge. Phones get two balanced rows
+   (four over three) rather than a three-column grid with Location alone. */
+.public-site.photo-layout .sky-nav {
+  width: max-content;
+  max-width: calc(100% - 32px);
+  gap: 0 4px;
+  padding: 4px 10px;
+  background: var(--ink);
+  border: 1px solid rgb(242 236 223 / 22%);
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 35%);
+}
+.public-site.photo-layout .sky-nav-link {
+  padding: 0 12px;
+  font-size: 19px;
+  text-shadow: none;
+}
+@media (max-width: 760px), (hover: none) and (pointer: coarse) {
+  .public-site.photo-layout .sky-nav {
+    top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: min(360px, calc(100% - 24px));
+    gap: 0;
+    padding: 4px 6px;
+  }
+  .public-site.photo-layout .sky-nav-link {
+    min-height: 44px;
+    padding: 0 9px;
+    font-size: 18px;
+    letter-spacing: 0.06em;
+  }
+}
+
+/* Home nav polish: sit higher so the bar clears the awning, keep it slim,
+   and give hover/focus a brand-red underline instead of the plain one. */
+.public-site.photo-layout .sky-nav {
+  top: 12px;
+  padding: 2px 8px;
+}
+.public-site.photo-layout .sky-nav-link {
+  position: relative;
+  min-height: 38px;
+  transition: color 160ms ease;
+}
+.public-site.photo-layout .sky-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 6px;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 180ms ease;
+}
+.public-site.photo-layout .sky-nav-link:hover,
+.public-site.photo-layout .sky-nav-link:focus-visible {
+  color: #fff;
+  text-decoration: none;
+}
+.public-site.photo-layout .sky-nav-link:is(:hover, :focus-visible)::after {
+  transform: scaleX(1);
+}
+.public-site.photo-layout .sky-nav-link:focus-visible {
+  outline: 2px solid var(--photo-paper);
+  outline-offset: -2px;
+  border-radius: 2px;
+}
+@media (max-width: 760px), (hover: none) and (pointer: coarse) {
+  .public-site.photo-layout .sky-nav {
+    top: 14px;
+  }
+  .public-site.photo-layout .sky-nav-link {
+    min-height: 44px;
+  }
+  .public-site.photo-layout .sky-nav-link::after {
+    left: 9px;
+    right: 9px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .public-site.photo-layout .sky-nav-link::after {
+    transition: none;
+  }
+}
