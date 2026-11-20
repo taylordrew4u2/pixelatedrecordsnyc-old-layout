@@ -1446,7 +1446,8 @@
     font-size: 20px;
     line-height: 1.35;
   }
-  /* Card pages: the Swipe hint sits bottom-centre, off the card's title row. */
+  /* Card pages: the text card covers most of the photo, so the Swipe hint
+     only got in the way of the card's text; dragging still works. */
   .public-site.photo-layout:is(
       .page-events,
       .page-location,
@@ -1455,11 +1456,7 @@
       .page-records
     )
     .pan-hint {
-    top: auto;
-    right: auto;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
+    display: none;
   }
   /* Footer reads the same on every page: Visit left, socials right. */
   .public-site.photo-layout .venue-footer-main {
