@@ -584,10 +584,12 @@ function Scene({
               {sky.daylight > 0 && (
                 <picture>
                   {skySource}
+                  {/* A buildings-free sky plate: the full photo here would
+                      show a dark ghost of the awning along the roofline. */}
                   <img
                     className="sky-day"
-                    src={photo}
-                    srcSet={sourceSet}
+                    src="/assets/storefront-wide-sky.webp"
+                    srcSet="/assets/storefront-wide-sky-small.webp 960w, /assets/storefront-wide-sky.webp 2672w"
                     sizes="100vw"
                     alt=""
                   />
