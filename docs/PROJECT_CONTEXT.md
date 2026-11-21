@@ -14,6 +14,17 @@ Latest owner corrections supersede older entrance and header instructions below:
 - A prominent **Happening live now** badge appears only while a published event is actually running. Future shows say **Tonight**; an empty schedule links to **Upcoming events**, with no live dot or claim.
 - Show **Created by 4U Digital** at the bottom on desktop and phones.
 
+## Desktop and phone polish — November 20, 2026
+
+Owner-approved layout decisions (PRs #2–#6). They supersede older notes below where they conflict.
+
+- **Home nav:** the main links sit together on one slim solid ink bar in the sky, not floating over the photo. Desktop shows one row; phones and tablets show two balanced rows (four over three). Hover and keyboard focus show a brand-red underline.
+- **Footer:** desktop is one slim row (copyright and socials left, "Portfolio demo · Created by 4U Digital" centred, Visit right). Phones read the same on every page: Visit left, socials right, credit below.
+- **Inside:** Record shop, DJ booth and Bar labels sit on one line; **About Us** sits on the back-wall door, clear of the drag hint. Untouched stored positions migrate on read; positions moved in admin are kept.
+- **DJ booth and Record shop (desktop):** Back to the room sits alone top-left; the room name is one centred title directly above the two actions, which have solid backplates. The booth photo fills the view so the events card starts below the decks.
+- **Phones:** the "Swipe" hint is hidden on text-card pages (Events, Location, About, Calendar, Records), where it covered text; photo pages keep it. The empty-tonight note and the street address use reading sizes, not headline sizes.
+- **Merging:** the owner asked that Claude merge its own pull requests once CI is green, there are no conflicts and no unresolved review comments. Red CI or review requests are fixed or reported first.
+
 Reconciled November 12, 2026 from the owner's shared **Branch · Write Website Prompt** conversation, from the initial brief through the latest three supplied room photos. Later corrections take precedence over earlier concepts. This document records requirements and evidence, not a claim that every feature is currently deployed.
 
 ## Project and priorities

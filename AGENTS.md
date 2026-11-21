@@ -11,3 +11,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Project continuity
 
 Read `docs/PROJECT_CONTEXT.md` before changing this project. It reconciles the owner's original brief with later corrections and records continuing publishing authorization. Later decisions there supersede historical implementation notes in `docs/BUILD_STATUS.md` and `docs/STOREFRONT_UPDATE.md`. Confirm live state separately from source and preview status.
+
+## Pull requests
+
+The owner wants pull requests merged without waiting for a separate go-ahead: once CI is green on the current head, there is no merge conflict and no unresolved review comment, merge it (squash). Fix red CI or review requests first, or report what blocks the merge. After merging, check the live site at https://pixeated.netlify.app/ when the change is visual.
