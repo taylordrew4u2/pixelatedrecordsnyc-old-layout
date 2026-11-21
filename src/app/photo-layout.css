@@ -1483,3 +1483,35 @@
     align-items: center;
   }
 }
+
+/* Final polish (Nov 21): phone menu fits without scrolling to reach Book the
+   venue, and footer links show their arrow on every page, not just some. */
+@media (max-width: 760px), (hover: none) and (pointer: coarse) {
+  .public-site.photo-layout .menu-top {
+    padding: 4px 0 6px;
+  }
+  .public-site.photo-layout .menu-link {
+    min-height: 44px;
+    padding: 2px 0;
+    font-size: 26px;
+    line-height: 1.1;
+  }
+  .public-site.photo-layout .menu-aside {
+    padding-top: 12px;
+  }
+  /* The Location item right above already leads to the address. */
+  .public-site.photo-layout .menu-aside > p:not(.eyebrow) {
+    display: none;
+  }
+  .public-site.photo-layout .menu-aside .button {
+    min-height: 44px;
+    padding-block: 0;
+  }
+  .public-site.photo-layout.is-immersive .venue-footer svg,
+  .public-site.photo-layout .venue-footer svg {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-left: 4px;
+  }
+}
