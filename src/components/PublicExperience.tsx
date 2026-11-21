@@ -401,16 +401,13 @@ function Scene({
         width / image.naturalWidth,
         height / image.naturalHeight,
       );
-      // Fill the screen, but never crop more than ~6% of the storefront's
-      // height; only ultra-wide screens show plain bands at the sides.
-      const contain = Math.min(
-        width / image.naturalWidth,
-        height / image.naturalHeight,
-      );
+      // Desktop storefront fills the whole screen edge to edge; on wide or
+      // short windows the photo is trimmed top and bottom (mostly sky and
+      // sidewalk) rather than leaving bands at the sides.
       // Inside: zoom past the empty foreground floor so the bins, booth,
       // mural and bar fill the frame and the room reads bigger.
       const scale = whole
-        ? Math.min(cover, contain * 1.06)
+        ? cover
         : exterior
           ? cover
           : short
