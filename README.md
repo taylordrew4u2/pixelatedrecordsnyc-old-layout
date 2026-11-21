@@ -1,20 +1,72 @@
+<p align="center">
+  <img src="docs/media/hero.jpg" alt="Pixelated Records website: the storefront at night on desktop, and the inside of the shop on a phone" width="100%">
+</p>
+
+<p align="center">
+  <a href="https://pixeated.netlify.app/"><b>▶ Visit the live demo</b></a>
+  &nbsp;·&nbsp;
+  <a href="docs/media/demo-desktop.mp4">Desktop video</a>
+  &nbsp;·&nbsp;
+  <a href="docs/media/demo-phone.mp4">Phone video</a>
+</p>
+
+<p align="center">
+  <img alt="Next.js 16" src="https://img.shields.io/badge/Next.js-16-181614?logo=nextdotjs&logoColor=white">
+  <img alt="React 19" src="https://img.shields.io/badge/React-19-181614?logo=react&logoColor=61DAFB">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-181614?logo=typescript&logoColor=3178C6">
+  <img alt="Netlify" src="https://img.shields.io/badge/Hosted_on-Netlify_Free-181614?logo=netlify&logoColor=00C7B7">
+</p>
+
 # Pixelated Records
 
-The website for Pixelated Records: a record shop, bar, and event space at 792 Onderdonk Avenue in Ridgewood, Queens. Venue details are based on [Pixelated's own page](https://linktr.ee/pixelatedrecordsnyc).
+The website for **Pixelated Records**: a record shop, bar and event space at 792 Onderdonk Avenue in Ridgewood, Queens. Instead of a page of boxes, visitors walk in. They start on the street in front of the real shop, step through the door, look around the room, and tap into the bar, the DJ booth or the record bins.
 
-Built with Next.js, React, and TypeScript. The public experience uses the venue’s supplied photographs and official logos. The owner’s Studio at `/admin` controls content, photographs, events, menus, navigation, hours, scene hotspots, and appearance.
+Every scene is a photograph of the venue itself, with its real signage, artwork, furniture and layout. Records are on the left, the DJ booth is straight ahead and the bar is on the right, just as they are in person.
 
-## The experience
+> This copy is a **portfolio demo**. It is public but kept out of search results, and its footer says so. The original site lives separately at [pixelatedrecordsnyc.netlify.app](https://pixelatedrecordsnyc.netlify.app/).
 
-- **Storefront:** the actual front of Pixelated, with gentle colored window lighting and day/dusk/night treatment based on New York time. The door’s **Come in** button enters the room.
-- **Inside:** records on the **left**, DJ booth **ahead**, bar on the **right**. Mobile has clear destination buttons alongside the photographic experience.
-- **Booth and events:** Events opens **What’s happening tonight**, followed by a horizontally scrollable list of upcoming events. A shared event source powers Tonight, the upcoming list, the calendar, and event detail URLs. Overnight shows remain visible across midnight, with daylight saving behavior covered by tests.
-- **Calendar:** month navigation on desktop and a readable agenda on mobile, with direct event links and cancellation/sold-out notices.
-- **Bar:** editable, accessible text menus with optional item photographs.
-- **Records:** the shop leads to About Us and a coming-soon online shop. Commerce is intentionally deferred.
-- **Location:** address, weekly/special hours, a map, and prefilled directions. Unknown hours are clearly marked as unconfirmed.
-- **Booking:** every venue-booking button uses the shared setting, initially `https://forms.gle/zDBZYAVFogu758nf8`.
-- **Navigation:** a labeled hamburger menu on every page, direct routes, keyboard support, a skip link, and reduced-motion support.
+## See it in action
+
+<table>
+  <tr>
+    <td width="68%" valign="top">
+      <a href="docs/media/demo-desktop.mp4"><img src="docs/media/demo-desktop.gif" alt="Desktop walkthrough: storefront, inside the room, the bar and its drinks menu, the DJ booth with upcoming events, the menu and the location page"></a>
+      <p align="center"><b>Desktop</b> · storefront → inside → bar → DJ booth → location</p>
+    </td>
+    <td width="32%" valign="top">
+      <a href="docs/media/demo-phone.mp4"><img src="docs/media/demo-phone.gif" alt="Phone walkthrough: storefront, swiping around the room, the menu, the bar and tonight's events"></a>
+      <p align="center"><b>Phone</b> · swipe around the room</p>
+    </td>
+  </tr>
+</table>
+
+Click either preview for the full-quality MP4.
+
+## The tour
+
+<p align="center">
+  <img src="docs/media/tour.jpg" alt="Six desktop screens: storefront, inside, bar and drinks menu, DJ booth, calendar and location" width="100%">
+</p>
+
+| Stop                      | What happens there                                                                                                                                                                                            |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Storefront**            | The real front of the shop. The sky follows New York's actual sunrise and sunset, so the windows glow at night. The main links sit on one slim bar in the sky.                                                |
+| **Inside**                | Records on the **left**, DJ booth **ahead**, bar on the **right**, and About Us on the back door. Drag (desktop) or swipe (phone) to look around.                                                             |
+| **Bar**                   | The gilded frame on the wall _is_ the button: tap **Bar Menu** for cocktails, wine, beer, zero-proof drinks and coffee, with prices.                                                                          |
+| **DJ booth**              | Tonight's show first, then upcoming events as a poster carousel, plus **Book the venue**.                                                                                                                     |
+| **Events & Calendar**     | One shared event list powers the header, the booth, Tonight, Upcoming and a month calendar. Late shows stay "live" past midnight, and **Happening live now** appears only while an event is actually running. |
+| **Record shop & Records** | Shop vinyl in person; the online shop is marked as coming soon.                                                                                                                                               |
+| **About & Location**      | The story, the address, a map, directions that open with the venue filled in, and opening hours.                                                                                                              |
+
+## Made for phones
+
+<p align="center">
+  <img src="docs/media/phones.jpg" alt="Five phone screens: storefront, inside, bar, menu and tonight's events" width="100%">
+</p>
+
+- Every cropped photo can be swiped side to side; a small hint shows where it helps and stays out of the way on text pages.
+- Large tap targets (44px or more), one-handed menu, readable text sizes and no sideways page scrolling.
+- Keyboard support, visible focus, a skip link, Escape-to-close dialogs and reduced-motion support.
 
 ## Owner’s Studio
 
