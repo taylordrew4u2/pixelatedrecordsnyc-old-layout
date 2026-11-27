@@ -1515,3 +1515,70 @@
     margin-left: 4px;
   }
 }
+
+/* Polish (Nov 27). Phones, DJ booth and record shop: match desktop. Back is a
+   compact pill alone at the top left (clear of the Swipe hint), and the room
+   name is one centred label directly above its two buttons. */
+@media (max-width: 760px), (hover: none) and (pointer: coarse) {
+  .public-site.photo-layout
+    :is(.space-booth, .space-record-shop)
+    .space-content
+    .back-link {
+    top: 12px;
+    left: 12px;
+    min-height: 40px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 15px;
+  }
+  .public-site.photo-layout
+    :is(.space-booth, .space-record-shop)
+    .space-content
+    h1 {
+    top: auto;
+    left: 50%;
+    bottom: 80px;
+    transform: translateX(-50%);
+    max-width: calc(100% - 32px);
+    padding: 4px 14px;
+    border-radius: 3px;
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.06em;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  /* About: the booking line reads as a sentence, not a shouting headline. */
+  .public-site.photo-layout .booking-section h2 {
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+}
+/* Calendar: Today matches the round month arrows instead of a tiny link. */
+.public-site.photo-layout .calendar-toolbar .text-button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--photo-paper);
+  border-radius: 999px;
+  font-size: 15px;
+  text-decoration: none;
+}
+@media (min-width: 761px) {
+  .public-site.photo-layout .booking-section h2 {
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+}
